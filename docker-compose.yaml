@@ -2,6 +2,8 @@ version: '3.6'
 services:
   postgres:
     image: postgres:12
+    ports:
+      - "5432:5432"
     restart: always
     volumes:
     - db_data:/var/lib/postgresql/data
@@ -11,8 +13,8 @@ services:
     image: hasura/graphql-engine:v2.0.1
     ports:
       - "8080:8080"
-    # extra_hosts:
-    # - "host.docker.internal:host-gateway"
+    extra_hosts: #run in case of localhost:8000 fails to the backend 
+    - "host.docker.internal:host-gateway"
     depends_on:
       - "postgres"
     restart: always
